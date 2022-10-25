@@ -1,0 +1,56 @@
+# 공통
+server:
+  port: 8080
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+# WebClient Request Response Logging
+logging:
+  level:
+    org.hibernate.type: TRACE
+    reactor:
+      netty:
+        http:
+          client:
+            HttpClient: info
+
+---
+# 로컬
+spring:
+  config:
+    activate:
+      on-profile: local
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:h2:~/test #jdbc:h2:tcp://152.70.245.120:9092/~/test
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: always
+
+naver:
+  host: https://openapi.naver.com/v1/search/local.json
+  clientId: NLbQtjQTFrdtrLLb6_t1
+  clientSecret: QgTQ1mXr0v
+
+kakao:
+  host: https://dapi.kakao.com/v2/local/search/keyword.json
+  restApiKey: b22b2bfafa0dda395d1cb98589b9346f
