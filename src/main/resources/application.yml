@@ -39,6 +39,7 @@ logging:
   level:
     kr.co.inseok.mapapi: debug
 
+# https://sabarada.tistory.com/205 해당 블로그 옵션 참고
 resilience4j:
   circuitbreaker:
     instances:

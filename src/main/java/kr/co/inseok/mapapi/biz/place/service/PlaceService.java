@@ -1,7 +1,6 @@
 package kr.co.inseok.mapapi.biz.place.service;
 
 import kr.co.inseok.mapapi.api.common.dto.PlaceResponse;
-import kr.co.inseok.mapapi.biz.keyword.dto.TopKeywordResponse;
 import kr.co.inseok.mapapi.biz.keyword.service.TopKeywordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,6 @@ public class PlaceService {
         topKeywordService.updateTopKeyword(query);
 
         return resultList;
-    }
-
-    public List<TopKeywordResponse> topKeywordList() {
-        return topKeywordService.topKeywordList();
     }
 
 }

@@ -8,6 +8,7 @@ import kr.co.inseok.mapapi.api.naver.config.NaverProperty;
 import kr.co.inseok.mapapi.api.naver.vo.NaverLocalSearchApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class NaverApiService implements MapApiService {
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 10;
 
     private static final String X_NAVER_CLIENT_ID = "X-Naver-Client-Id";
     private static final String X_NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
@@ -58,14 +59,25 @@ public class NaverApiService implements MapApiService {
                 .getItems()
                 .stream()
                 .map(items -> Place.builder()
-                        .title(items.getTitle())
-                        .comparisonTitle(items.getTitle().toUpperCase().trim())
+                        .title(removeHtmlTag(items.getTitle()))
+                        .comparisonTitle(removeHtmlTag(items.getTitle()).toUpperCase().trim())
                         .build())
                 .collect(Collectors.toList());
     }
 
+    // 에러발생 시 해당 Fallback 동작
+    private List<Place> localSearchFallback(Throwable e) {
+        log.warn("네이버 API 이상 발생 : {}", ExceptionUtils.getStackTrace(e));
+        return new ArrayList<>();
+    }
+
+    // 에러 실패율 달성하여 해당 Fallback 동작
     private List<Place> localSearchFallback(CallNotPermittedException e) {
         log.warn("네이버 API 이상 발생으로 인한 서킷브레이커 작동 : {}", ExceptionUtils.getStackTrace(e));
         return new ArrayList<>();
+    }
+
+    private String removeHtmlTag(String title) {
+        return title.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", StringUtils.EMPTY);
     }
 }

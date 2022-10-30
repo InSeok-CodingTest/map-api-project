@@ -30,6 +30,6 @@ public class Place {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return comparisonTitle.hashCode();
     }
 }
