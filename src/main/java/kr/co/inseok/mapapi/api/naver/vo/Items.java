@@ -1,4 +1,4 @@
-package kr.co.inseok.mapapi.api.naver.domain;
+package kr.co.inseok.mapapi.api.naver.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

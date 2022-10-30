@@ -1,4 +1,4 @@
-package kr.co.inseok.mapapi.api.kakao.domain;
+package kr.co.inseok.mapapi.api.kakao.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
