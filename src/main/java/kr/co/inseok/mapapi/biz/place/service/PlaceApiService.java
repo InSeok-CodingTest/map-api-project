@@ -30,7 +30,7 @@ public class PlaceApiService {
     @Cacheable(value = "searchPlaceCache", key = "#query")
     public List<PlaceResponse> searchPlace(String query) {
         if (StringUtils.isBlank(query)) {
-            throw new RuntimeException(ErrorMessageEnum.QUERY_REQUIRED.getErrorMessage());
+            throw new IllegalArgumentException(ErrorMessageEnum.QUERY_REQUIRED.getErrorMessage());
         }
 
         Queue<Place> sparePlaceList = new LinkedList<>();
